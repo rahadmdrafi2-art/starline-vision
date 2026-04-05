@@ -142,13 +142,9 @@ export default function AnnouncementBar() {
 
             {/* ─── Center scrolling zone: message text ─── */}
             <div ref={containerRef} className="relative flex-1 overflow-hidden min-w-0">
-              {/* Edge fade masks */}
-              {needsScroll && (
-                <>
-                  <div className="absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-card/80 to-transparent pointer-events-none" />
-                  <div className="absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-card/80 to-transparent pointer-events-none" />
-                </>
-              )}
+              {/* Edge fade masks — always show for scrolling */}
+              <div className="absolute left-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-r from-card/80 to-transparent pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 z-10 bg-gradient-to-l from-card/80 to-transparent pointer-events-none" />
 
               <AnimatePresence mode="wait">
                 <motion.div
@@ -159,26 +155,15 @@ export default function AnnouncementBar() {
                   transition={{ duration: 0.3, ease: 'easeOut' }}
                   className="overflow-hidden whitespace-nowrap"
                 >
-                  {needsScroll ? (
-                    <span
-                      ref={textRef}
-                      className={`announcement-scroll text-xs font-medium tracking-wide ${paused ? 'paused' : ''} ${
-                        isCritical ? 'text-red-200' : 'text-foreground/90'
-                      }`}
-                      style={{ '--scroll-duration': `${scrollDuration}s` } as React.CSSProperties}
-                    >
-                      {notice.short_message || notice.title}
-                    </span>
-                  ) : (
-                    <span
-                      ref={textRef}
-                      className={`text-xs font-medium tracking-wide ${
-                        isCritical ? 'text-red-200' : 'text-foreground/90'
-                      }`}
-                    >
-                      {notice.short_message || notice.title}
-                    </span>
-                  )}
+                  <span
+                    ref={textRef}
+                    className={`announcement-scroll text-xs font-medium tracking-wide ${paused ? 'paused' : ''} ${
+                      isCritical ? 'text-red-200' : 'text-foreground/90'
+                    }`}
+                    style={{ '--scroll-duration': `${scrollDuration}s` } as React.CSSProperties}
+                  >
+                    {notice.short_message || notice.title}
+                  </span>
                 </motion.div>
               </AnimatePresence>
             </div>
