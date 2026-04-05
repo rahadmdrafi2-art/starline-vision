@@ -126,7 +126,7 @@ export default function NoticeDetailPage() {
             )}
 
             {/* Meta */}
-            <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-6 pb-6 border-b border-border/30">
+            <div className="flex flex-wrap gap-4 text-xs text-muted-foreground/75 mb-6 pb-6 border-b border-border/30">
               <span className="inline-flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5" />
                 Published: {formatNoticeDateTime(notice.starts_at)}

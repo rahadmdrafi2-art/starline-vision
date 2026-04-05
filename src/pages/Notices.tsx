@@ -50,7 +50,7 @@ export default function NoticesPage() {
               <h1 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
                 Notice Center
               </h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-sm text-muted-foreground/75 mt-0.5">
                 Service alerts, travel advisories, and official announcements
               </p>
             </div>

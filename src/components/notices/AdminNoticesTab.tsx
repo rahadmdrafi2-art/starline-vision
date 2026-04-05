@@ -294,8 +294,8 @@ export default function AdminNoticesTab() {
             )}
 
             {/* Preview context hint */}
-            <p className="text-[10px] text-muted-foreground/50 text-center">
-              This preview shows how the notice will appear to visitors
+            <p className="text-[10px] text-muted-foreground/40 text-center mt-2">
+              Preview reflects how visitors will see this notice
             </p>
           </div>
         </div>
@@ -427,44 +427,61 @@ function PreviewBar({ notice }: { notice: Notice }) {
   const isHigh = notice.priority === 'high';
 
   return (
-    <div className="glass-card-elevated overflow-hidden">
-      {/* Browser chrome simulation */}
-      <div className="flex items-center gap-2 px-4 py-2 border-b border-border/20 bg-secondary/30">
+    <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40">
+      {/* Browser chrome — refined */}
+      <div className="flex items-center gap-2.5 px-4 py-2.5 border-b border-border/15 bg-secondary/20">
         <div className="flex gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-red-500/50" />
-          <div className="w-2 h-2 rounded-full bg-amber-500/50" />
-          <div className="w-2 h-2 rounded-full bg-emerald-500/50" />
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/40" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/40" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/40" />
         </div>
-        <div className="flex-1 mx-4">
-          <div className="h-5 bg-secondary/60 rounded-md flex items-center justify-center">
-            <span className="text-[9px] text-muted-foreground/40">starline.com.bd</span>
+        <div className="flex-1 mx-6">
+          <div className="h-6 bg-secondary/40 rounded-lg flex items-center justify-center border border-border/10">
+            <span className="text-[10px] text-muted-foreground/35 font-medium">starline.com.bd</span>
           </div>
         </div>
       </div>
-      {/* Actual bar preview */}
+
+      {/* Announcement bar preview */}
       <div className={`relative overflow-hidden ${
-        isCritical ? 'bg-gradient-to-r from-red-950/50 via-card/95 to-red-950/50' :
-        isHigh ? 'bg-gradient-to-r from-amber-950/20 via-card/95 to-amber-950/20' :
-        'bg-card/90'
+        isCritical ? 'bg-gradient-to-r from-red-950/30 via-background/95 to-red-950/30' :
+        isHigh ? 'bg-gradient-to-r from-amber-950/15 via-background/95 to-amber-950/15' :
+        'bg-background/80'
       }`}>
-        {isCritical && <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-red-500/80 via-red-400/60 to-red-500/80" />}
-        <div className="flex items-center h-8 px-4 gap-2.5">
-          {isCritical ? <AlertTriangle className="w-3 h-3 text-red-400/90 shrink-0" /> : <Info className="w-3 h-3 text-muted-foreground/60 shrink-0" />}
-          <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded-full border shrink-0 opacity-80 ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>{tCfg.label}</span>
-          <span className={`text-[11px] font-medium truncate ${isCritical ? 'text-red-200/90' : 'text-foreground/75'}`}>
+        {isCritical && <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-red-500/60 via-red-400/40 to-red-500/60" />}
+        <div className="flex items-center h-9 px-4 gap-3">
+          {isCritical ? <AlertTriangle className="w-3 h-3 text-red-400/80 shrink-0" /> : <Info className="w-3 h-3 text-muted-foreground/40 shrink-0" />}
+          <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded-full border shrink-0 opacity-70 ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>{tCfg.label}</span>
+          <div className="w-px h-3 bg-border/20" />
+          <span className={`text-[11px] font-medium truncate flex-1 ${isCritical ? 'text-red-200/80' : 'text-foreground/65'}`}>
             {notice.short_message || notice.title || 'Enter a message...'}
           </span>
           {notice.cta_label && (
-            <span className={`ml-auto text-[9px] font-semibold uppercase px-2 py-0.5 rounded-full border shrink-0 ${
-              isCritical ? 'bg-red-500/15 text-red-300/90 border-red-500/20' :
-              'bg-primary/8 text-primary/80 border-primary/15'
+            <span className={`text-[9px] font-semibold uppercase px-2 py-0.5 rounded-full border shrink-0 ${
+              isCritical ? 'bg-red-500/10 text-red-300/80 border-red-500/15' :
+              'bg-primary/6 text-primary/70 border-primary/12'
             }`}>{notice.cta_label}</span>
           )}
         </div>
       </div>
-      {/* Simulated navbar below */}
-      <div className="h-8 border-t border-border/15 bg-card/50 flex items-center px-4">
-        <span className="text-[10px] font-semibold text-foreground/60">⬛ Star Line</span>
+
+      {/* Simulated navbar */}
+      <div className="h-10 border-t border-border/10 bg-card/40 flex items-center px-4 gap-2">
+        <div className="w-5 h-5 rounded bg-primary/20 flex items-center justify-center">
+          <span className="text-[8px] text-primary font-bold">SL</span>
+        </div>
+        <span className="text-[11px] font-semibold text-foreground/50">Star Line</span>
+        <div className="flex-1" />
+        <div className="flex gap-4">
+          <span className="text-[10px] text-muted-foreground/30">Home</span>
+          <span className="text-[10px] text-muted-foreground/30">Notices</span>
+          <span className="text-[10px] text-muted-foreground/30">Admin</span>
+        </div>
+      </div>
+
+      {/* Simulated hero hint */}
+      <div className="h-16 bg-gradient-to-b from-card/30 to-background/20 flex items-center justify-center border-t border-border/5">
+        <span className="text-[10px] text-muted-foreground/20 font-medium">Hero Section</span>
       </div>
     </div>
   );
@@ -475,11 +492,16 @@ function PreviewCard({ notice }: { notice: Notice }) {
   const pCfg = noticePriorityConfig[notice.priority];
 
   return (
-    <div className="glass-card-elevated overflow-hidden">
-      {/* Section header simulation */}
-      <div className="px-5 pt-4 pb-3 border-b border-border/15">
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-starline-gold">Travel Updates & Notices</span>
+    <div className="rounded-xl overflow-hidden border border-border/30 bg-card/40">
+      {/* Section context */}
+      <div className="px-5 pt-5 pb-3 border-b border-border/10">
+        <div className="flex items-center gap-2 mb-1">
+          <div className="w-1 h-1 rounded-full bg-starline-gold" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-starline-gold">Travel Updates & Notices</span>
+        </div>
+        <span className="text-[10px] text-muted-foreground/40">Homepage section preview</span>
       </div>
+
       {/* Card preview */}
       <div className="p-5">
         <div className="glass-card overflow-hidden">
@@ -488,8 +510,8 @@ function PreviewCard({ notice }: { notice: Notice }) {
             notice.priority === 'high' ? 'bg-gradient-to-r from-transparent via-amber-500/70 to-transparent' :
             'bg-gradient-to-r from-transparent via-border to-transparent'
           }`} />
-          <div className="p-4">
-            <div className="flex items-center gap-2 mb-2.5">
+          <div className="p-4 sm:p-5">
+            <div className="flex items-center gap-2 mb-3">
               <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>
                 {tCfg.icon} {tCfg.label}
               </span>
@@ -498,9 +520,16 @@ function PreviewCard({ notice }: { notice: Notice }) {
                   <span className={`inline-block w-1.5 h-1.5 rounded-full ${pCfg.dot}`} />{pCfg.label}
                 </span>
               )}
+              {notice.is_pinned && (
+                <span className="text-[10px] text-starline-gold/60 ml-auto">📌 Pinned</span>
+              )}
             </div>
-            <h4 className="font-display text-sm font-semibold text-foreground mb-1.5">{notice.title || 'Notice title...'}</h4>
-            {notice.summary && <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{notice.summary}</p>}
+            <h4 className="font-display text-sm font-semibold text-foreground mb-1.5 leading-snug">{notice.title || 'Notice title...'}</h4>
+            {notice.summary && <p className="text-xs text-muted-foreground/70 line-clamp-2 leading-relaxed">{notice.summary}</p>}
+            <div className="flex items-center gap-2 mt-3 text-[11px] text-muted-foreground/50">
+              <span>Just now</span>
+              <span className="ml-auto text-primary/60 font-medium">View →</span>
+            </div>
           </div>
         </div>
       </div>

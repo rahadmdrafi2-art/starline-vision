@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, Info, ChevronLeft, ChevronRight, X, ExternalLink } from 'lucide-react';
@@ -36,7 +36,6 @@ export default function AnnouncementBar() {
     setNotices(sortNotices(barNotices));
   }, []);
 
-  // Auto-rotate
   useEffect(() => {
     if (notices.length <= 1 || paused) return;
     const timer = setInterval(() => {
@@ -71,7 +70,7 @@ export default function AnnouncementBar() {
   const isCritical = notice.priority === 'critical';
   const isHigh = notice.priority === 'high';
 
-  const scrollDuration = Math.max(18, (notice.short_message || notice.title).length * 0.3);
+  const scrollDuration = Math.max(22, (notice.short_message || notice.title).length * 0.35);
 
   return (
     <div className="relative z-50">
@@ -82,63 +81,64 @@ export default function AnnouncementBar() {
         onBlur={() => setPaused(false)}
         role="region"
         aria-label="Announcements"
-        className={`relative overflow-hidden border-b transition-colors ${
+        className={`relative overflow-hidden transition-colors ${
           isCritical
-            ? 'bg-gradient-to-r from-red-950/50 via-card/95 to-red-950/50 border-red-900/25'
+            ? 'bg-gradient-to-r from-red-950/30 via-background/95 to-red-950/30 border-b border-red-900/15'
             : isHigh
-            ? 'bg-gradient-to-r from-amber-950/20 via-card/95 to-amber-950/20 border-amber-900/15'
-            : 'bg-card/90 border-border/20'
+            ? 'bg-gradient-to-r from-amber-950/15 via-background/95 to-amber-950/15 border-b border-amber-900/10'
+            : 'bg-background/80 border-b border-border/15'
         } backdrop-blur-xl`}
       >
         {/* Priority accent — subtle left line */}
         {isCritical && (
-          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-red-500/80 via-red-400/60 to-red-500/80" />
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-red-500/60 via-red-400/40 to-red-500/60" />
         )}
         {isHigh && (
-          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-amber-500/40 via-amber-400/25 to-amber-500/40" />
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-amber-500/30 via-amber-400/15 to-amber-500/30" />
         )}
 
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6">
-          <div className="flex items-center h-8 gap-2.5">
+          <div className="flex items-center h-9 gap-3">
 
             {/* ─── Left: priority icon + type badge ─── */}
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-2.5 shrink-0">
               {isCritical ? (
                 <div className="relative flex items-center justify-center">
-                  <AlertTriangle className="w-3 h-3 text-red-400/90" />
+                  <AlertTriangle className="w-3 h-3 text-red-400/80" />
                   <div className="absolute inset-0 animate-pulse-glow rounded-full">
-                    <div className="w-full h-full rounded-full bg-red-500/15" />
+                    <div className="w-full h-full rounded-full bg-red-500/10" />
                   </div>
                 </div>
               ) : (
-                <Info className="w-3 h-3 text-muted-foreground/60" />
+                <Info className="w-3 h-3 text-muted-foreground/40" />
               )}
 
-              <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded-full border ${tCfg.bg} ${tCfg.border} ${tCfg.color} opacity-80`}>
+              <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded-full border ${tCfg.bg} ${tCfg.border} ${tCfg.color} opacity-70`}>
                 {tCfg.label}
               </span>
+
+              {/* Subtle separator */}
+              <div className="w-px h-3 bg-border/20" />
             </div>
 
             {/* ─── Center: scrolling message lane ─── */}
             <div className="relative flex-1 overflow-hidden min-w-0">
-              {/* Soft edge fade masks */}
-              <div className="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
-                style={{ background: `linear-gradient(to right, ${isCritical ? 'hsl(220 28% 6%)' : 'hsl(220 24% 9%)'}, transparent)` }} />
-              <div className="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
-                style={{ background: `linear-gradient(to left, ${isCritical ? 'hsl(220 28% 6%)' : 'hsl(220 24% 9%)'}, transparent)` }} />
+              {/* Soft edge fade masks — uses CSS gradient for seamless blend */}
+              <div className="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none bg-gradient-to-r from-background/90 to-transparent" />
+              <div className="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none bg-gradient-to-l from-background/90 to-transparent" />
 
               <AnimatePresence mode="wait">
                 <motion.div
                   key={notice.id}
-                  initial={{ opacity: 0, y: 4 }}
+                  initial={{ opacity: 0, y: 3 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  exit={{ opacity: 0, y: -3 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
                   className="overflow-hidden whitespace-nowrap"
                 >
                   <span
                     className={`announcement-scroll text-[11px] font-medium tracking-wide ${paused ? 'paused' : ''} ${
-                      isCritical ? 'text-red-200/90' : 'text-foreground/75'
+                      isCritical ? 'text-red-200/80' : 'text-foreground/65'
                     }`}
                     style={{ '--scroll-duration': `${scrollDuration}s` } as React.CSSProperties}
                   >
@@ -149,17 +149,20 @@ export default function AnnouncementBar() {
             </div>
 
             {/* ─── Right: CTA + nav + dismiss ─── */}
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="flex items-center gap-1.5 shrink-0">
+              {/* Subtle separator */}
+              <div className="w-px h-3 bg-border/20 mr-0.5" />
+
               {/* CTA */}
               {notice.cta_label && notice.cta_url && (
                 <Link
                   to={notice.cta_url}
                   className={`hidden sm:flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full transition-all ${
                     isCritical
-                      ? 'bg-red-500/15 text-red-300/90 hover:bg-red-500/25 border border-red-500/20'
+                      ? 'bg-red-500/10 text-red-300/80 hover:bg-red-500/20 border border-red-500/15'
                       : isHigh
-                      ? 'bg-amber-500/10 text-amber-300/90 hover:bg-amber-500/20 border border-amber-500/15'
-                      : 'bg-primary/8 text-primary/80 hover:bg-primary/15 border border-primary/15'
+                      ? 'bg-amber-500/8 text-amber-300/80 hover:bg-amber-500/15 border border-amber-500/12'
+                      : 'bg-primary/6 text-primary/70 hover:bg-primary/12 border border-primary/12'
                   }`}
                 >
                   {notice.cta_label}
@@ -169,15 +172,15 @@ export default function AnnouncementBar() {
 
               {/* Prev / Next */}
               {notices.length > 1 && (
-                <div className="flex items-center gap-px ml-1">
-                  <button onClick={goPrev} className="p-0.5 rounded hover:bg-secondary/40 transition-colors" aria-label="Previous notice">
-                    <ChevronLeft className="w-3 h-3 text-muted-foreground/60" />
+                <div className="flex items-center gap-px ml-0.5">
+                  <button onClick={goPrev} className="p-1 rounded hover:bg-secondary/30 transition-colors" aria-label="Previous notice">
+                    <ChevronLeft className="w-3 h-3 text-muted-foreground/40" />
                   </button>
-                  <span className="text-[9px] text-muted-foreground/50 tabular-nums font-medium min-w-[1.5rem] text-center">
+                  <span className="text-[9px] text-muted-foreground/40 tabular-nums font-medium min-w-[1.5rem] text-center">
                     {(current % notices.length) + 1}/{notices.length}
                   </span>
-                  <button onClick={goNext} className="p-0.5 rounded hover:bg-secondary/40 transition-colors" aria-label="Next notice">
-                    <ChevronRight className="w-3 h-3 text-muted-foreground/60" />
+                  <button onClick={goNext} className="p-1 rounded hover:bg-secondary/30 transition-colors" aria-label="Next notice">
+                    <ChevronRight className="w-3 h-3 text-muted-foreground/40" />
                   </button>
                 </div>
               )}
@@ -186,10 +189,10 @@ export default function AnnouncementBar() {
               {!isCritical && notice.is_dismissible && (
                 <button
                   onClick={() => handleDismiss(notice)}
-                  className="p-0.5 rounded hover:bg-secondary/40 transition-colors ml-0.5"
+                  className="p-1 rounded hover:bg-secondary/30 transition-colors ml-0.5"
                   aria-label="Dismiss notice"
                 >
-                  <X className="w-2.5 h-2.5 text-muted-foreground/50" />
+                  <X className="w-2.5 h-2.5 text-muted-foreground/35" />
                 </button>
               )}
             </div>

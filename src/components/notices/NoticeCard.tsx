@@ -61,13 +61,13 @@ export default function NoticeCard({ notice, index = 0, compact = false }: Notic
 
           {/* Summary */}
           {!compact && notice.summary && (
-            <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2">
+            <p className="text-xs text-muted-foreground/80 leading-relaxed mb-3 line-clamp-2">
               {notice.summary}
             </p>
           )}
 
           {/* Meta row */}
-          <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+          <div className="flex items-center gap-3 text-[11px] text-muted-foreground/70">
             <span className="inline-flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {formatNoticeDate(notice.starts_at)}

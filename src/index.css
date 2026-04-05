@@ -149,16 +149,12 @@
   100% { transform: translateX(-50%); }
 }
 
-@keyframes notice-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-
 .announcement-scroll {
   display: inline-block;
   white-space: nowrap;
-  animation: announcement-scroll var(--scroll-duration, 24s) linear infinite;
+  animation: announcement-scroll var(--scroll-duration, 28s) linear infinite;
   will-change: transform;
+  -webkit-font-smoothing: antialiased;
 }
 
 .announcement-scroll.paused {
@@ -166,12 +162,12 @@
 }
 
 @keyframes pulse-glow-soft {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.6; }
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow-soft 2.5s ease-in-out infinite;
+  animation: pulse-glow-soft 3s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
