@@ -26,7 +26,7 @@ export default function Index() {
       {/* Announcement Bar */}
       <AnnouncementBar />
 
-      {/* Navbar placeholder */}
+      {/* Navbar */}
       <nav className="border-b border-border/30 bg-card/50 backdrop-blur-xl sticky top-0 z-40">
         <div className="container flex items-center justify-between h-14">
           <Link to="/" className="font-display text-lg font-bold text-foreground flex items-center gap-2">
@@ -62,14 +62,13 @@ export default function Index() {
               Experience world-class intercity coach services. Book your seat, track your journey, and travel in comfort.
             </p>
             <Link
-              to="/search"
+              to="/notices"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90 transition-all btn-primary-glow"
             >
-              Search Trips
+              View Notices
             </Link>
           </motion.div>
         </div>
-        {/* Hero ambient effects */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
       </section>
 
@@ -150,10 +149,10 @@ export default function Index() {
               Experience premium intercity travel with Star Line. Your seat is waiting.
             </p>
             <Link
-              to="/search"
+              to="/notices"
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90 transition-all btn-primary-glow"
             >
-              Search Trips
+              View Notices
             </Link>
           </motion.div>
         </div>

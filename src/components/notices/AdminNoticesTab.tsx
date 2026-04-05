@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Bell, Plus, Pencil, Trash2, Eye, EyeOff, Pin, PinOff, Copy, Archive,
-  ChevronDown, X, ExternalLink, Search, AlertTriangle, Info
+  ChevronDown, X, ExternalLink, Search, AlertTriangle, Info, Monitor, LayoutGrid
 } from 'lucide-react';
 import { mockNotices } from '@/data/mockNotices';
 import {
@@ -159,35 +159,30 @@ export default function AdminNoticesTab() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Form */}
           <div className="space-y-4">
-            {/* Title */}
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Title *</label>
               <input value={form.title} onChange={e => updateField('title', e.target.value)}
                 className="w-full px-3 py-2 bg-secondary/50 border border-border/30 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
             </div>
 
-            {/* Short message */}
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Short Message (for top bar)</label>
               <input value={form.short_message} onChange={e => updateField('short_message', e.target.value)}
                 className="w-full px-3 py-2 bg-secondary/50 border border-border/30 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
             </div>
 
-            {/* Summary */}
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Summary</label>
               <textarea value={form.summary} onChange={e => updateField('summary', e.target.value)} rows={2}
                 className="w-full px-3 py-2 bg-secondary/50 border border-border/30 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none" />
             </div>
 
-            {/* Body */}
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Full Body</label>
               <textarea value={form.body} onChange={e => updateField('body', e.target.value)} rows={6}
                 className="w-full px-3 py-2 bg-secondary/50 border border-border/30 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 resize-y font-mono" />
             </div>
 
-            {/* Type + Priority row */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1.5">Type</label>
@@ -207,7 +202,6 @@ export default function AdminNoticesTab() {
               </div>
             </div>
 
-            {/* Status */}
             <div>
               <label className="block text-xs font-medium text-muted-foreground mb-1.5">Status</label>
               <select value={form.status} onChange={e => updateField('status', e.target.value as NoticeStatus)}
@@ -218,7 +212,6 @@ export default function AdminNoticesTab() {
               </select>
             </div>
 
-            {/* Toggles */}
             <div className="grid grid-cols-2 gap-3">
               {[
                 { key: 'is_pinned' as const, label: 'Pinned' },
@@ -238,7 +231,6 @@ export default function AdminNoticesTab() {
               ))}
             </div>
 
-            {/* CTA */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1.5">CTA Label</label>
@@ -252,7 +244,6 @@ export default function AdminNoticesTab() {
               </div>
             </div>
 
-            {/* Dates */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1.5">Starts At</label>
@@ -267,21 +258,30 @@ export default function AdminNoticesTab() {
             </div>
           </div>
 
-          {/* Preview panel */}
-          <div className="space-y-4">
+          {/* Preview panel — production-grade framing */}
+          <div className="space-y-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Preview</h3>
-              <div className="flex gap-1">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                <Eye className="w-3.5 h-3.5" />
+                Live Preview
+              </h3>
+              <div className="flex gap-0.5 p-0.5 rounded-lg bg-secondary/50 border border-border/20">
                 <button
                   onClick={() => setPreviewMode('bar')}
-                  className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${previewMode === 'bar' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                  className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium rounded-md transition-all ${
+                    previewMode === 'bar' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                  }`}
                 >
+                  <Monitor className="w-3 h-3" />
                   Top Bar
                 </button>
                 <button
                   onClick={() => setPreviewMode('card')}
-                  className={`px-2.5 py-1 text-[10px] rounded-md transition-colors ${previewMode === 'card' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                  className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium rounded-md transition-all ${
+                    previewMode === 'card' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                  }`}
                 >
+                  <LayoutGrid className="w-3 h-3" />
                   Card
                 </button>
               </div>
@@ -292,6 +292,11 @@ export default function AdminNoticesTab() {
             ) : (
               <PreviewCard notice={previewNotice} />
             )}
+
+            {/* Preview context hint */}
+            <p className="text-[10px] text-muted-foreground/50 text-center">
+              This preview shows how the notice will appear to visitors
+            </p>
           </div>
         </div>
       </div>
@@ -415,28 +420,51 @@ export default function AdminNoticesTab() {
   );
 }
 
-/* ─── Inline Previews ─── */
+/* ─── Inline Previews — Production-grade framing ─── */
 function PreviewBar({ notice }: { notice: Notice }) {
   const tCfg = noticeTypeConfig[notice.type];
   const isCritical = notice.priority === 'critical';
   const isHigh = notice.priority === 'high';
 
   return (
-    <div className="glass-card overflow-hidden">
-      <div className="text-[10px] font-medium text-muted-foreground px-3 py-1.5 border-b border-border/20">Top Bar Preview</div>
+    <div className="glass-card-elevated overflow-hidden">
+      {/* Browser chrome simulation */}
+      <div className="flex items-center gap-2 px-4 py-2 border-b border-border/20 bg-secondary/30">
+        <div className="flex gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-red-500/50" />
+          <div className="w-2 h-2 rounded-full bg-amber-500/50" />
+          <div className="w-2 h-2 rounded-full bg-emerald-500/50" />
+        </div>
+        <div className="flex-1 mx-4">
+          <div className="h-5 bg-secondary/60 rounded-md flex items-center justify-center">
+            <span className="text-[9px] text-muted-foreground/40">starline.com.bd</span>
+          </div>
+        </div>
+      </div>
+      {/* Actual bar preview */}
       <div className={`relative overflow-hidden ${
-        isCritical ? 'bg-gradient-to-r from-red-950/80 via-red-950/40 to-red-950/80' :
-        isHigh ? 'bg-gradient-to-r from-amber-950/30 via-card/90 to-amber-950/30' :
-        'bg-card/80'
+        isCritical ? 'bg-gradient-to-r from-red-950/50 via-card/95 to-red-950/50' :
+        isHigh ? 'bg-gradient-to-r from-amber-950/20 via-card/95 to-amber-950/20' :
+        'bg-card/90'
       }`}>
-        {isCritical && <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-red-500 via-red-400 to-red-500" />}
-        <div className="flex items-center h-9 px-3 gap-2">
-          {isCritical ? <AlertTriangle className="w-3.5 h-3.5 text-red-400 shrink-0" /> : <Info className="w-3.5 h-3.5 text-muted-foreground shrink-0" />}
-          <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>{tCfg.label}</span>
-          <span className={`text-xs truncate ${isCritical ? 'text-red-200' : 'text-foreground/90'}`}>
+        {isCritical && <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-red-500/80 via-red-400/60 to-red-500/80" />}
+        <div className="flex items-center h-8 px-4 gap-2.5">
+          {isCritical ? <AlertTriangle className="w-3 h-3 text-red-400/90 shrink-0" /> : <Info className="w-3 h-3 text-muted-foreground/60 shrink-0" />}
+          <span className={`text-[9px] font-semibold uppercase tracking-wider px-1.5 py-px rounded-full border shrink-0 opacity-80 ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>{tCfg.label}</span>
+          <span className={`text-[11px] font-medium truncate ${isCritical ? 'text-red-200/90' : 'text-foreground/75'}`}>
             {notice.short_message || notice.title || 'Enter a message...'}
           </span>
+          {notice.cta_label && (
+            <span className={`ml-auto text-[9px] font-semibold uppercase px-2 py-0.5 rounded-full border shrink-0 ${
+              isCritical ? 'bg-red-500/15 text-red-300/90 border-red-500/20' :
+              'bg-primary/8 text-primary/80 border-primary/15'
+            }`}>{notice.cta_label}</span>
+          )}
         </div>
+      </div>
+      {/* Simulated navbar below */}
+      <div className="h-8 border-t border-border/15 bg-card/50 flex items-center px-4">
+        <span className="text-[10px] font-semibold text-foreground/60">⬛ Star Line</span>
       </div>
     </div>
   );
@@ -447,26 +475,34 @@ function PreviewCard({ notice }: { notice: Notice }) {
   const pCfg = noticePriorityConfig[notice.priority];
 
   return (
-    <div className="glass-card overflow-hidden">
-      <div className="text-[10px] font-medium text-muted-foreground px-3 py-1.5 border-b border-border/20">Card Preview</div>
-      <div className="p-4">
-        <div className={`h-[2px] w-full mb-3 ${
-          notice.priority === 'critical' ? 'bg-gradient-to-r from-transparent via-red-500 to-transparent' :
-          notice.priority === 'high' ? 'bg-gradient-to-r from-transparent via-amber-500/70 to-transparent' :
-          'bg-gradient-to-r from-transparent via-border to-transparent'
-        }`} />
-        <div className="flex items-center gap-2 mb-2">
-          <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>
-            {tCfg.icon} {tCfg.label}
-          </span>
-          {notice.priority !== 'normal' && (
-            <span className={`text-[10px] ${pCfg.color}`}>
-              <span className={`inline-block w-1.5 h-1.5 rounded-full ${pCfg.dot} mr-1`} />{pCfg.label}
-            </span>
-          )}
+    <div className="glass-card-elevated overflow-hidden">
+      {/* Section header simulation */}
+      <div className="px-5 pt-4 pb-3 border-b border-border/15">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-starline-gold">Travel Updates & Notices</span>
+      </div>
+      {/* Card preview */}
+      <div className="p-5">
+        <div className="glass-card overflow-hidden">
+          <div className={`h-[2px] w-full ${
+            notice.priority === 'critical' ? 'bg-gradient-to-r from-transparent via-red-500 to-transparent' :
+            notice.priority === 'high' ? 'bg-gradient-to-r from-transparent via-amber-500/70 to-transparent' :
+            'bg-gradient-to-r from-transparent via-border to-transparent'
+          }`} />
+          <div className="p-4">
+            <div className="flex items-center gap-2 mb-2.5">
+              <span className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${tCfg.bg} ${tCfg.border} ${tCfg.color}`}>
+                {tCfg.icon} {tCfg.label}
+              </span>
+              {notice.priority !== 'normal' && (
+                <span className={`text-[10px] ${pCfg.color} flex items-center gap-1`}>
+                  <span className={`inline-block w-1.5 h-1.5 rounded-full ${pCfg.dot}`} />{pCfg.label}
+                </span>
+              )}
+            </div>
+            <h4 className="font-display text-sm font-semibold text-foreground mb-1.5">{notice.title || 'Notice title...'}</h4>
+            {notice.summary && <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{notice.summary}</p>}
+          </div>
         </div>
-        <h4 className="font-display text-sm font-semibold text-foreground mb-1">{notice.title || 'Notice title...'}</h4>
-        {notice.summary && <p className="text-xs text-muted-foreground line-clamp-2">{notice.summary}</p>}
       </div>
     </div>
   );
