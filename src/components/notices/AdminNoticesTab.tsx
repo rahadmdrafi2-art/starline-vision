@@ -294,8 +294,8 @@ export default function AdminNoticesTab() {
             )}
 
             {/* Preview context hint */}
-            <p className="text-[10px] text-muted-foreground/50 text-center">
-              This preview shows how the notice will appear to visitors
+            <p className="text-[10px] text-muted-foreground/40 text-center mt-2">
+              Preview reflects how visitors will see this notice
             </p>
           </div>
         </div>
