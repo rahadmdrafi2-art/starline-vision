@@ -164,7 +164,6 @@ export default function AnnouncementBar() {
                   >
                     {notice.short_message || notice.title}
                   </span>
-                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
