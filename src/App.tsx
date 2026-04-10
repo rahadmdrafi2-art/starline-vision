@@ -8,6 +8,10 @@ import NotFound from "./pages/NotFound.tsx";
 import NoticesPage from "./pages/Notices.tsx";
 import NoticeDetailPage from "./pages/NoticeDetail.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import StaffLogin from "./pages/StaffLogin.tsx";
+import StaffTrips from "./pages/StaffTrips.tsx";
+import TripControl from "./pages/TripControl.tsx";
+import AdminTripMonitor from "./pages/AdminTripMonitor.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +26,10 @@ const App = () => (
           <Route path="/notices" element={<NoticesPage />} />
           <Route path="/notices/:id" element={<NoticeDetailPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/staff/login" element={<StaffLogin />} />
+          <Route path="/staff/trips" element={<StaffTrips />} />
+          <Route path="/staff/trip/:id" element={<TripControl />} />
+          <Route path="/admin/trips" element={<AdminTripMonitor />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
