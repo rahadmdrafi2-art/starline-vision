@@ -8,6 +8,10 @@ import NotFound from "./pages/NotFound.tsx";
 import NoticesPage from "./pages/Notices.tsx";
 import NoticeDetailPage from "./pages/NoticeDetail.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import StaffLogin from "./pages/StaffLogin.tsx";
+import StaffTrips from "./pages/StaffTrips.tsx";
+import TripControl from "./pages/TripControl.tsx";
+import AdminTripMonitor from "./pages/AdminTripMonitor.tsx";
 
 const queryClient = new QueryClient();
 
